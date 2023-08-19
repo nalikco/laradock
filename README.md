@@ -43,7 +43,7 @@ This is an alias for the docker compose up command.
 
 After a successful build and run, the application will be available at **localhost:PORT,** where **PORT** is the port specified in the **.env** file in the **APP_PORT** section.
 
-After an update (e.g. git pull) you will need to rebuild the containers on startup::
+After an update (e.g. git pull) you will need to rebuild the containers on startup:
 ```
 bin/up --build
 ```
@@ -60,6 +60,15 @@ Run command:
 bin/npm run build
 ```
 
+## Running tests
+To run tests, you need to start the app.
+```
+bin/up
+```
+Running tests:
+```
+bin/artisan test
+```
 
 ## Available commands
 ### Composer
