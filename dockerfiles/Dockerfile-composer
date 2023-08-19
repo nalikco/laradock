@@ -1,0 +1,5 @@
+FROM composer:2.5.8
+
+WORKDIR /var/www/app
+
+ENTRYPOINT ["composer", "--ignore-platform-reqs"]
