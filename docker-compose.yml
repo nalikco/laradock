@@ -2,12 +2,13 @@ version: "3.8"
 
 services:
   nginx:
-    image: "nginx:1.25.2-alpine"
+    image: "nginx:1.25.3-alpine"
     container_name: laravel-nginx
     restart: unless-stopped
     depends_on:
       - php
       - postgres
+      - adminer
     ports:
       - "${APP_PORT}:80"
     volumes:
@@ -27,7 +28,7 @@ services:
     volumes:
       - ./src:/var/www/app
   postgres:
-    image: postgres:15.4-alpine3.18
+    image: postgres:16.0-alpine3.18
     container_name: laravel-postgres
     restart: unless-stopped
     volumes:
@@ -53,6 +54,15 @@ services:
     volumes:
       - ./src:/var/www/app
     entrypoint: ["php", "/var/www/app/artisan"]
+  adminer:
+    image: adminer:4.8.1-standalone
+    container_name: laravel-adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: nette
+    ports:
+      - "${ADMINER_PORT}:8080"
   pint:
     container_name: laravel-pint
     image: laravel/pint
