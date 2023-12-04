@@ -1,9 +1,10 @@
 version: "3.8"
+name: "laravel-app"
 
 services:
   nginx:
     image: "nginx:1.25.3-alpine"
-    container_name: laravel-nginx
+    container_name: laravel-app-nginx
     restart: unless-stopped
     depends_on:
       - php
@@ -16,11 +17,11 @@ services:
       - ./src:/var/www/app
       - ./.env:/var/www/app/.env
   php:
-    image: laravel/php
+    image: laravel-app/php
     build:
       context: dockerfiles
       dockerfile: Dockerfile-php
-    container_name: laravel-php
+    container_name: laravel-app-php
     restart: unless-stopped
     depends_on:
       - postgres
@@ -31,15 +32,15 @@ services:
       - ./.env:/var/www/app/.env
   postgres:
     image: postgres:16.0-alpine3.18
-    container_name: laravel-postgres
+    container_name: laravel-app-postgres
     restart: unless-stopped
     volumes:
       - ./database:/var/lib/postgresql/data
     env_file:
       - .env
   composer:
-    container_name: laravel-composer
-    image: laravel/composer
+    container_name: laravel-app-composer
+    image: laravel-app/composer
     build:
       context: dockerfiles
       dockerfile: Dockerfile-composer
@@ -47,8 +48,8 @@ services:
       - ./src:/var/www/app
       - ./.env:/var/www/app/.env
   artisan:
-    container_name: laravel-artisan
-    image: laravel/artisan
+    container_name: laravel-app-artisan
+    image: laravel-app/artisan
     build:
       context: dockerfiles
       dockerfile: Dockerfile-php
@@ -60,7 +61,7 @@ services:
     entrypoint: ["php", "/var/www/app/artisan"]
   adminer:
     image: adminer:4.8.1-standalone
-    container_name: laravel-adminer
+    container_name: laravel-app-adminer
     restart: unless-stopped
     environment:
       ADMINER_DEFAULT_SERVER: postgres
@@ -68,8 +69,8 @@ services:
     ports:
       - "${ADMINER_PORT}:8080"
   pint:
-    container_name: laravel-pint
-    image: laravel/pint
+    container_name: laravel-app-pint
+    image: laravel-app/pint
     build:
       context: dockerfiles
       dockerfile: Dockerfile-php
@@ -78,8 +79,8 @@ services:
       - ./.env:/var/www/app/.env
     entrypoint: ["php", "/var/www/app/vendor/bin/pint"]
   node:
-    container_name: laravel-node
-    image: laravel/node
+    container_name: laravel-app-node
+    image: laravel-app/node
     build:
       context: dockerfiles
       dockerfile: Dockerfile-node
