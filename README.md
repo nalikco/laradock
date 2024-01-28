@@ -1,109 +1,40 @@
-This is a stub for running Laravel applications in Docker containers.
-Available: Composer, Artisan, NPM & PostgreSQL.
+# Laravel Docker Stub
 
-## Preparing for launch
-#### .env
-Copy the **.env.example** file to **.env** and customize it. The **APP_KEY** section will be configured below.
+First of all, you need to copy the ```.env.example``` to ```.env``` and configure it.
 
-#### Installing dependencies
-```
-bin/composer install
-bin/npm install
-```
-#### Running migrations
-To run migrations, you need to start the app.
-```
-bin/up
-```
-After start the migrations.
-```
-bin/artisan migrate
-```
-#### Create a symlink for storage.
-```
-bin/artisan storage:link
-```
-#### Generate an application key.
-Run command:
-```
-bin/artisan key:generate --show
-```
-Then enter the generated key in the .env file in the **APP_KEY** section
-
-## Running
-Run command:
-```
-bin/up
-```
-or to run in the background:
-```
-bin/up -d
-```
-This is an alias for the docker compose up command.
-
-After a successful build and run, the application will be available at **localhost:PORT,** where **PORT** is the port specified in the **.env** file in the **APP_PORT** section.
-
-After an update (e.g. git pull) you will need to rebuild the containers on startup:
-```
-bin/up --build
+Inside the PHP container you need to run the following commands:
+```shell
+php artisan migrate # running migrations
+php artisan storage:link # creating a symbolic link to the storage folder
 ```
 
-## Running frontend for dev
-Run command:
-```
-bin/npm run dev
-```
-
-## Building frontend
-Run command:
-```
-bin/npm run build
+The data is stored in the ```data``` folder at the level above the project:
+```shell
+../data/db # database folder
+../data/uploads # app uploads folder (storage/app/public)
 ```
 
-## Running tests
-To run tests, you need to start the app.
-```
-bin/up
-```
-Running tests:
-```
-bin/artisan test
+Running for development:
+```shell
+bin/dev/up
 ```
 
-## Available commands
-### Composer
-Running composer command (require, install etc.).
+Building for development:
+```shell
+bin/dev/build
+```
 
+Running for production:
+```shell
+bin/prod/up
 ```
-bin/composer <command>
-```
-### Artisan
-Running laravel artisan command (migrate, make etc.).
 
+Building for production:
+```shell
+bin/prod/build
 ```
-bin/artisan <command>
-```
-### Pint
-Running laravel pint.
 
-```
-bin/pint
-```
-### NPM
-Running npm for installing packages, running in dev mode or building.
-
-```
-bin/npm <command>
-```
-### Up
-Launches all the necessary containers for the application to work.
-
-```
-bin/up -d
-```
-### Down
-Stops all containers.
-
-```
-bin/down
+Entering to container with PHP:
+```shell
+bin/php-container
 ```
