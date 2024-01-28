@@ -1,0 +1,1 @@
+docker exec -it laravel-app-php /bin/bash $@
