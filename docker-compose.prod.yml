@@ -3,7 +3,9 @@ name: "laravel-app"
 
 services:
   nginx:
-    image: "nginx:1.25.3"
+    build:
+      context: src
+      dockerfile: ../dockerfiles/Dockerfile-nginx
     container_name: laravel-app-nginx
     restart: unless-stopped
     depends_on:
@@ -19,6 +21,7 @@ services:
     image: laravel-app/php
     build:
       context: src
+      dockerfile: ../dockerfiles/Dockerfile-php
     container_name: laravel-app-php
     restart: unless-stopped
     depends_on:

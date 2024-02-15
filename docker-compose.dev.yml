@@ -20,6 +20,7 @@ services:
     image: laravel-app/php
     build:
       context: src
+      dockerfile: ../dockerfiles/Dockerfile-php
     container_name: laravel-app-php
     restart: unless-stopped
     depends_on:

@@ -1,0 +1,7 @@
+FROM nginx:1.25.3
+
+WORKDIR /var/www/app
+
+COPY . ./
+
+RUN ln -s /var/www/app/storage/app/public/ /var/www/app/public/storage
