@@ -1,9 +1,8 @@
-version: "3.8"
 name: "laravel-app"
 
 services:
   nginx:
-    image: "nginx:1.25.3"
+    image: "nginx:1.25.4"
     container_name: laravel-app-nginx
     restart: unless-stopped
     depends_on:
@@ -31,7 +30,7 @@ services:
       - ./src:/var/www/app
       - ../data/uploads:/var/www/app/storage/app/public
   postgres:
-    image: postgres:16.0
+    image: postgres:16.2
     container_name: laravel-app-postgres
     restart: unless-stopped
     volumes:
