@@ -7,41 +7,39 @@ env:
 tasks:
   build:
     desc: "Builds application images."
-    cmds:
-      - docker compose --env-file $ENV_FILE build {{.CLI_ARGS}}
+    cmd: docker compose --env-file $ENV_FILE build {{.CLI_ARGS}}
   up:
     desc: "Launches application containers."
-    cmds:
-      - docker compose --env-file $ENV_FILE up {{.CLI_ARGS}}
+    cmd: docker compose --env-file $ENV_FILE up {{.CLI_ARGS}}
   stop:
     desc: "Stops application containers."
-    cmds:
-      - docker compose --env-file $ENV_FILE stop {{.CLI_ARGS}}
+    cmd: docker compose --env-file $ENV_FILE stop {{.CLI_ARGS}}
   down:
     desc: "Stops and deletes application containers."
-    cmds:
-      - docker compose --env-file $ENV_FILE down {{.CLI_ARGS}}
+    cmd: docker compose --env-file $ENV_FILE down {{.CLI_ARGS}}
   artisan:
     desc: "Launches Laravel Artisan."
-    cmds:
-      - docker exec -it $CONTAINER_NAME php artisan {{.CLI_ARGS}}
+    cmd: docker exec -it $CONTAINER_NAME php artisan {{.CLI_ARGS}}
   composer:
     desc: "Launches Composer."
-    cmds:
-      - docker exec -it $CONTAINER_NAME composer {{.CLI_ARGS}}
+    cmd: docker exec -it $CONTAINER_NAME composer {{.CLI_ARGS}}
   rector:
     desc: "Formats files using Rector."
-    cmds:
-      - docker exec -it $CONTAINER_NAME ./vendor/bin/rector
+    cmd: docker exec -it $CONTAINER_NAME ./vendor/bin/rector
   node:
     desc: "Launches Node.js."
-    cmds:
-      - docker exec -it $CONTAINER_NAME node {{.CLI_ARGS}}
+    cmd: docker exec -it $CONTAINER_NAME node {{.CLI_ARGS}}
   npm:
     desc: "Launches NPM."
-    cmds:
-      - docker exec -it $CONTAINER_NAME npm {{.CLI_ARGS}}
+    cmd: docker exec -it $CONTAINER_NAME npm {{.CLI_ARGS}}
   perms:
     desc: "Sets the necessary permissions on directories."
+    cmd: sudo chmod 777 -R storage bootstrap/cache vendor
+  format:
+    desc: "Formats all code."
     cmds:
-      - sudo chmod 777 -R storage bootstrap/cache vendor
+      - docker exec -it $CONTAINER_NAME npm run format
+      - docker exec -it $CONTAINER_NAME ./vendor/bin/rector
+  test:
+    desc: "Runs tests."
+    cmd: docker exec -it $CONTAINER_NAME php artisan test {{.CLI_ARGS}}
